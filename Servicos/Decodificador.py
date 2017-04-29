@@ -37,7 +37,7 @@ def get_horas(s):
     for i in s:
         if i in c.horas:
             horas.append(i)
-        elif i in c.diasToLiteral and not len(horas):
+        elif len(horas):
             break
     return horas
 

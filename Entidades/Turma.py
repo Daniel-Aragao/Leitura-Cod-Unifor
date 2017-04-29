@@ -4,7 +4,7 @@ from Servicos.Decodificador import decodificar as decode
 class Turma:
     def __init__(self, cod, disc):
         self.Horarios = []
-        self.codigo = cod
+        self.codigo_disciplina = cod
         self.disciplina = disc
 
     def add_horario(self, horario):
