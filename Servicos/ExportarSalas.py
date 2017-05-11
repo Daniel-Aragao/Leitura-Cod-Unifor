@@ -4,7 +4,7 @@ from Entidades.Sala import Sala
 
 def write_salas(salas: list, path):
     """
-    :param book: ExportarSalas.Book 
+    :param salas: ExportarSalas.Book 
     :param path: str
     :return: None
     """
@@ -29,21 +29,17 @@ def write_salas(salas: list, path):
     book = Book(sheets, path)
 
     for i, sala in enumerate(salas):
+        if sala.numero == 999:  # 999 EAD, A FIXAR no codigo
+            continue
+        for dia in range(2, 8):
+            row = [None for x in range(0, len(header2))]
+            row[0] = sala.numero
+            sheets[dia].data.append(row)
+
         for turma in sala.Turmas:
             for horario in turma.Horarios:
                 sheet = sheets[horario.dia]
 
-                # e as salas q n tão em todos os dias? vão quebrar
-                if len(sheet.data) == i + i_offset:
-                    row = [None for x in range(0, len(header2))]
-                    row[0] = sala.numero
-                    sheet.data.append(row)
-                    print('___'+str(i)+'___' + str(sheet.titulo))
-                else:
-                    print(str(i) + '___'+str(sheet.titulo))
-
-                if i == 3 and horario.dia == 6:
-                    print('aqui')
                 row = sheet.data[i + i_offset]
                 index = j_offset + turnos_offset[horario.turno] + horas_offset[horario.codigo]
 
@@ -52,9 +48,49 @@ def write_salas(salas: list, path):
 
                 # if row[index]:
                 #     raise Exception('Choque de horário')
-                row[index] = turma.disciplina
+
+                row[index] = turma.codigo_disciplina  # 'X'  # turma.disciplina
 
     Excel.write_workbook(book)
+
+
+def write_sala_por_dia(salas: list, path):
+    """
+        :param salas: ExportarSalas.Book 
+        :param path: str
+        :return: None
+        """
+
+    sheets = []
+
+    book = Book(sheets, path)
+
+    header = ['', '', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+    offset_top = 1
+    left1 = ['Manhã', '', '', '', '', '', 'Tarde', '', '', '', '', '', 'Noite', '', '', '', '', '']
+    left2 = ['A', 'B', 'C', 'D', 'E', 'F', 'A', 'B', 'C', 'D', 'E', 'F', 'A', 'B', 'C', 'D', 'E', 'F']
+    offset_left = 2
+    turnos_offset = {'N': 12, 'T': 6, 'M': 0}
+    horas_offset = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5}
+    for sala in salas:
+        rows = [header]
+
+        for i in range(0, len(left2)):
+            v = ['' for x in range(0, len(header))]
+            v[0] = left1[i]
+            v[1] = left2[i]
+            rows.append(v)
+
+        sheet = Sheet(rows, sala.numero)
+        sheets.append(sheet)
+        for turma in sala.Turmas:
+            for horario in turma.Horarios:
+                row = rows[offset_top + turnos_offset[horario.turno] + horas_offset[horario.codigo] ]
+                row[horario.dia] = turma.codigo_disciplina
+
+    Excel.write_workbook(book)
+
+
 
 """
 book = {

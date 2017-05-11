@@ -145,10 +145,17 @@ class Excel:
             raise Exception("book can't be 'None'")
 
         for sheet in book.sheets:
-            sh = workbook.add_sheet(sheet.titulo, cell_overwrite_ok=True)
-            for i, row in enumerate(sheet.data):
+            if isinstance(sheet, Sheet):
+                titulo = sheet.titulo
+                data = sheet.data
+            else:
+                titulo = book.sheets[sheet].titulo
+                data = book.sheets[sheet].data
+            sh = workbook.add_sheet(titulo, cell_overwrite_ok=True)
+            for i, row in enumerate(data):
                 for j, cell in enumerate(row):
-                    sh.write(i, j, cell)
+                    if j is not None:
+                        sh.write(i, j, cell)
 
         workbook.save(book.path)
 

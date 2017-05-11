@@ -58,11 +58,3 @@ def get_digit(copia):
 
 def has_numbers(input_string):
     return any(char.isdigit() for char in input_string)
-
-"""
-Look around:
-    Buscar ignora os digitos e busca pelas letras ao redor do digito
-    selecionado previamente, para esse digito será decidido quem são
-    as letras relevantes para ele como turno e codigo da hora
-    
-"""

@@ -14,7 +14,7 @@ def get_salas(path):
     #                        sheet_index
     #                           row_start
     #                               cod_disp, disp, turma, sala
-    sheet = Excel.read_sheet(0, 7100, [0, 2, 12, 13], path)
+    sheet = Excel.read_sheet(0, 1, [0, 2, 12, 13], path)
 
     salas = []
 
@@ -25,6 +25,8 @@ def get_salas(path):
         sala_string = row[3]  # Sala
         d_b1 = cod_disciplina_string + " " + sala_string + "  " + turma_string + "  " + disciplina_string
 
+        if disciplina_string == 'A FIXAR' or sala_string == 'EAD' or sala_string == '999':
+            continue
         turma = Turma(cod_disciplina_string, disciplina_string)
         turma.add_horario(turma_string)
 

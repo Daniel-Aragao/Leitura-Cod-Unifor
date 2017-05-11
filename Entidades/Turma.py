@@ -10,7 +10,7 @@ class Turma:
     def add_horario(self, horario):
         if horario is None:
             raise Exception('Horario inválido')
-        
+
         horarios = decode(horario)
 
         for e in horarios:
