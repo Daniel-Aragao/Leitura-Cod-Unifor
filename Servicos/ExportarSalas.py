@@ -2,7 +2,7 @@ from Servicos.ExcelTools import *
 from Entidades.Sala import Sala
 
 
-def write_salas(salas: list, path):
+def write_salas_por_dia(salas: list, path):
     """
     :param salas: ExportarSalas.Book 
     :param path: str
@@ -54,7 +54,7 @@ def write_salas(salas: list, path):
     Excel.write_workbook(book)
 
 
-def write_sala_por_dia(salas: list, path):
+def write_sala_por_sala(salas: list, path):
     """
         :param salas: ExportarSalas.Book 
         :param path: str

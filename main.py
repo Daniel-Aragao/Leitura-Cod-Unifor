@@ -10,6 +10,6 @@ if __name__ == '__main__':
     # write_salas(path + r'\Dia.xls')
     # write_salas(lista_salas, path + r'\Sala.xls')
 
-    # write_salas(lista_salas, path + r'\BookX.xls')
-    write_sala_por_dia(lista_salas, path + r'\BookDia.xls')
+    # write_salas_por_dia(lista_salas, path + r'\BookDia.xls')
+    write_sala_por_sala(lista_salas, path + r'\BookSala.xls')
     print('fim')
